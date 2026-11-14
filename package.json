@@ -1,0 +1,75 @@
+{
+  "name": "threshold",
+  "version": "0.1.1",
+  "private": true,
+  "description": "Garmin MCP server: connect Garmin Connect to Claude, ChatGPT and any AI assistant. Readiness, HRV, training load and FIT analysis, free on Cloudflare Workers.",
+  "license": "MIT",
+  "homepage": "https://kareemmsayed.github.io/Threshold/",
+  "type": "module",
+  "keywords": [
+    "garmin",
+    "garmin-mcp",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "garmin-connect",
+    "garmin-api",
+    "personal-api",
+    "claude",
+    "chatgpt",
+    "hrv",
+    "training-load",
+    "fit",
+    "cloudflare-workers",
+    "fitness",
+    "running",
+    "cycling"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KareemmSayed/Threshold.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "gen:fit-profile": "node scripts/gen-fit-profile.mjs",
+    "gen:view": "node scripts/gen-view.mjs"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^1.2.4",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "fflate": "^0.8.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.7",
+    "@cloudflare/workers-types": "^5.20261023.1",
+    "@garmin/fitsdk": "^21.218.0",
+    "@types/node": "^22.20.5",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.152.0"
+  },
+  "cloudflare": {
+    "bindings": {
+      "GARMIN_API_KEY": {
+        "description": "Your Garmin Personal API key. Create one at https://connect.garmin.com/app/settings/personalApiToken"
+      },
+      "ACCESS_KEY": {
+        "description": "A password you make up, 20+ characters (let your password manager generate one). You type it once per app you connect."
+      },
+      "DB": {
+        "description": "Your private archive of Garmin data (D1)."
+      },
+      "OAUTH_KV": {
+        "description": "OAuth clients and tokens, plus the cached Garmin token (KV)."
+      }
+    }
+  }
+}
